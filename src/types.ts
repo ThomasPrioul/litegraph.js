@@ -1,7 +1,9 @@
 import { Vector2, widgetTypes } from "./basic-types";
+import { LGraph } from "./LGraph";
+import { LGraphGroup } from "./LGraphGroup";
 import { LGraphNode } from "./LGraphNode";
 import { LiteGraph } from "./litegraph";
-import { LLink } from "./LLink";
+import { LLink, SerializedLLink } from "./LLink";
 
 export type WidgetCallback<T extends IWidget = IWidget> = (
     this: T,
@@ -72,18 +74,3 @@ export interface IComboWidget
 export interface ITextWidget extends IWidget<string, {}> {
     type: "text";
 }
-
-export type serializedLGraph<
-    TNode = ReturnType<LGraphNode["serialize"]>,
-    // https://github.com/jagenjo/litegraph.js/issues/74
-    TLink = [number, number, number, number, number, string],
-    TGroup = ReturnType<LGraphGroup["serialize"]>
-    > = {
-        last_node_id: LGraph["last_node_id"];
-        last_link_id: LGraph["last_link_id"];
-        nodes: TNode[];
-        links: TLink[];
-        groups: TGroup[];
-        config: LGraph["config"];
-        version: typeof LiteGraph.VERSION;
-    };

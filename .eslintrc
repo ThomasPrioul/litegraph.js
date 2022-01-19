@@ -8,6 +8,8 @@
         "node": true
     },
     "rules": {
+        "curly": ["error", "multi-or-nest"],
+        "indent": ["error", 2],
         "no-console": "off",
         "no-empty": "warn",
         "no-redeclare": "warn",
@@ -16,6 +18,5 @@
         "no-unused-vars": "warn",
         "no-mixed-spaces-and-tabs": "warn",
         "no-unreachable": "warn",
-        "curly": ["warn", "all"]
     }
 }

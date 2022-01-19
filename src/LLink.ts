@@ -1,14 +1,36 @@
+import { Vector2 } from "./basic-types";
+
 export type SerializedLLink = [number, string, number, number, number, number];
 
 export class LLink {
+    id: number;
+    type: string | null;
+    origin_id: number;
+    origin_slot: number;
+    target_id: number;
+    target_slot: number;
+    data: any;
+    pos: Vector2;
+
+    constructor()
     constructor(
-        public id: number,
-        public type: string,
-        public origin_id: number,
-        public origin_slot: number,
-        public target_id: number,
-        public target_slot: number
-    ) {}
+        id?: number,
+        type?: string,
+        origin_id?: number,
+        origin_slot?: number,
+        target_id?: number,
+        target_slot?: number
+    ) {
+        this.id = id || 0;
+        this.type = type || null;
+        this.origin_id = origin_id || 0;
+        this.origin_slot = origin_slot || 0;
+        this.target_id = target_id || 0;
+        this.target_slot = target_slot || 0;
+
+        this.data = null;
+        this.pos = [0, 0]; //center
+    }
 
     configure(o: LLink | SerializedLLink) {
         if (o instanceof LLink) {

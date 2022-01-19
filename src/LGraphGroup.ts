@@ -1,8 +1,10 @@
 import { Vector2, Vector4 } from "./basic-types";
+import { node_colors } from "./colors";
+import { LGraph } from "./LGraph";
 import { LGraphNode } from "./LGraphNode";
+import { overlapBounding } from "./utils";
 
 export class LGraphGroup {
-
     title: string;
     private _bounding: Vector4;
     color: string;
@@ -10,6 +12,8 @@ export class LGraphGroup {
     private _pos: any;
     private _size: Vector2;
     font_size: number;
+    private _nodes: LGraphNode[];
+    graph: LGraph;
 
     set pos(v) {
         if (!v || v.length < 2) {
@@ -35,22 +39,22 @@ export class LGraphGroup {
         return this._size;
     }
 
-    constructor(title: string) {
+    constructor(title?: string) {
         this.title = title || "Group";
         this.font_size = 24;
-        this.color = LGraphCanvas.node_colors.pale_blue
-            ? LGraphCanvas.node_colors.pale_blue.groupcolor
+        this.color = node_colors.pale_blue
+            ? node_colors.pale_blue.groupcolor
             : "#AAA";
         this._bounding = [10, 10, 140, 80];
-        this._pos = this._bounding.subarray(0, 2);
-        this._size = this._bounding.subarray(2, 4);
+        this._pos = [ this._bounding[0], this._bounding[1] ];
+        this._size = [ this._bounding[2], this._bounding[3] ];
         this._nodes = [];
         this.graph = null;
     }
 
     configure(o: SerializedLGraphGroup) {
         this.title = o.title;
-        this._bounding.set(o.bounding);
+        for (let index = 0; index < o.bounding.length; index++) this._bounding[index] = o.bounding[index];
         this.color = o.color;
         this.font = o.font;
     }
@@ -76,8 +80,8 @@ export class LGraphGroup {
         if (ignore_nodes) {
             return;
         }
-        for (var i = 0; i < this._nodes.length; ++i) {
-            var node = this._nodes[i];
+        for (let i = 0; i < this._nodes.length; ++i) {
+            let node = this._nodes[i];
             node.pos[0] += deltax;
             node.pos[1] += deltay;
         }
@@ -85,11 +89,11 @@ export class LGraphGroup {
 
     recomputeInsideNodes() {
         this._nodes.length = 0;
-        var nodes = this.graph._nodes;
-        var node_bounding = new Float32Array(4);
+        let nodes = this.graph.nodes;
+        let node_bounding: Vector4 = [0, 0, 0, 0];
 
-        for (var i = 0; i < nodes.length; ++i) {
-            var node = nodes[i];
+        for (let i = 0; i < nodes.length; ++i) {
+            let node = nodes[i];
             node.getBounding(node_bounding);
             if (!overlapBounding(this._bounding, node_bounding)) {
                 continue;

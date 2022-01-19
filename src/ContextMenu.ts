@@ -49,8 +49,8 @@ import { LGraphNode } from "./LGraphNode";
   if (options.className) {
     root.className += " " + options.className;
   }
-  root.style.minWidth = 100;
-  root.style.minHeight = 100;
+  root.style.minWidth = "100";
+  root.style.minHeight = "100";
   root.style.pointerEvents = "none";
   setTimeout(function () {
     root.style.pointerEvents = "auto";
