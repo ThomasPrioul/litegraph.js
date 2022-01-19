@@ -1,11 +1,10 @@
 node_modules/
+build/
 node_modules/*
 npm-debug.log
 temp/
 temp/*
 
 # Editors
-/.vscode/*
-!/.vscode/extensions.json
 *.bak
 .project
