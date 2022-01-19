@@ -1,10 +1,3 @@
 node_modules/
+dist/
 build/
-node_modules/*
-npm-debug.log
-temp/
-temp/*
-
-# Editors
-*.bak
-.project
